@@ -53,9 +53,9 @@ imap <F5>  <ESC>:nohlsearch<CR>i
 vmap <F5>  <ESC>:nohlsearch<CR>gv
 
 "Fast reloading of the .vimrc
-map <leader>s :source ~/.vim/vimrc<cr>
+map <leader>sc :source ~/.vim/vimrc<cr>
 "Fast editing of .vimrc
-map <leader>e :e! ~/.vim/vimrc<cr>
+map <leader>ec :e! ~/.vim/vimrc<cr>
 "When .vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vim/vimrc
 
@@ -375,3 +375,10 @@ for p in sys.path:
     if os.path.isdir(p):
         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 EOF
+
+" Vimclojure
+au Bufenter,Bufnewfile *.clj setl complete+=k~/.clj_completions
+let vimclojure#NailgunClient = "~/code/java/vimclojure/ng"
+let clj_want_gorilla = 1
+let clj_paren_rainbow = 1
+let clj_highlight_contrib = 1
