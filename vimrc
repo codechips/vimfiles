@@ -1,4 +1,4 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Get out of VI's compatible mode..
@@ -19,8 +19,7 @@ endif
 set history=400
 
 "Enable filetype plugin
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 "Set to auto read when a file is changed from the outside
 set autoread
@@ -31,6 +30,7 @@ set mouse=a
 "Set mapleader
 let mapleader = ","
 let g:mapleader = ","
+let maplocalleader = "-"
 
 "Fast saving
 nmap <leader>w :w!<cr>
@@ -53,9 +53,9 @@ imap <F5>  <ESC>:nohlsearch<CR>i
 vmap <F5>  <ESC>:nohlsearch<CR>gv
 
 "Fast reloading of the .vimrc
-map <leader>sc :source ~/.vim/vimrc<cr>
+map <leader>cs :source ~/.vim/vimrc<cr>
 "Fast editing of .vimrc
-map <leader>ec :e! ~/.vim/vimrc<cr>
+map <leader>ce :e! ~/.vim/vimrc<cr>
 "When .vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vim/vimrc
 
@@ -377,8 +377,8 @@ for p in sys.path:
 EOF
 
 " Vimclojure
-au Bufenter,Bufnewfile *.clj setl complete+=k~/.clj_completions
-let vimclojure#NailgunClient = "~/code/java/vimclojure/ng"
-let clj_want_gorilla = 1
-let clj_paren_rainbow = 1
-let clj_highlight_contrib = 1
+au Bufenter, Bufnewfile *.clj setl complete+=k~/.clj_completions
+let g:clj_want_gorilla = 1
+let g:clj_paren_rainbow = 1
+let g:clj_highlight_contrib = 1
+let vimclojure#NailgunClient = "/Users/ilia/code/java/vimclojure/ng"
