@@ -35,6 +35,9 @@ let maplocalleader = "-"
 "Fast saving
 nmap <leader>w :w!<cr>
 
+" Fuzzy finder
+nmap <leader>ff :FufFile<cr>
+
 " Mappings
 map § $
 imap § $
@@ -66,8 +69,8 @@ autocmd! bufwritepost vimrc source ~/.vim/vimrc
 "Enable syntax hl
 syntax enable
 
-"set guifont=Droid_Sans_Mono:h8
-set guifont=Bitstream_Vera_Sans_Mono:h12
+"set guifont=Menlo:h11
+set guifont=Andale_Mono:h11
 
 if has("gui_running")
   set guioptions-=T
@@ -76,7 +79,7 @@ if has("gui_running")
   let psc_style='cool'
   set lines=40 columns=180
   if has("gui_macvim")
-      set noantialias
+      set antialias
 	  set fuoptions=maxvert,maxhorz
   endif
   colorscheme fnaqevan
@@ -241,9 +244,7 @@ map <C-l> <C-W>l
 
 "Actually, the tab does not switch buffers, but my arrows
 "Bclose function ca be found in "Buffer related" section
-"map <leader>bd :Bclose<cr>
-"map <down> <leader>bd
-"Use the arrows to something usefull
+map <leader>bd :Bclose<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
 
@@ -277,7 +278,7 @@ set encoding=utf-8 fileencodings=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Enable folding, I find it very useful
+"Enable folding
 set nofen
 set fdl=0
 
@@ -366,7 +367,7 @@ autocmd BufEnter * call CHANGE_CURR_DIR()
 " Trim trailing whitespace
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 
-" Make gf work (C-w, C-f)
+" Make gf work (C-w, C-f) ... sometimes
 python << EOF
 import os
 import sys
@@ -381,4 +382,6 @@ au Bufenter, Bufnewfile *.clj setl complete+=k~/.clj_completions
 let g:clj_want_gorilla = 1
 let g:clj_paren_rainbow = 1
 let g:clj_highlight_contrib = 1
-let vimclojure#NailgunClient = "/Users/ilia/code/java/vimclojure/ng"
+let vimclojure#NailgunClient = "~/code/java/vimclojure/ng"
+
+autocmd FileType *.txt set textwidth=80
