@@ -72,9 +72,10 @@ syntax enable
 "set guifont=Menlo:h11
 set guifont=Andale_Mono:h11
 
+set cursorline
+
 if has("gui_running")
   set guioptions-=T
-  "set guioptions-=e
   set background=dark
   let psc_style='cool'
   set lines=40 columns=180
@@ -86,6 +87,7 @@ if has("gui_running")
   highlight Cursor guibg=red guifg=white
 else
   colorscheme camo
+  hi MatchParen ctermfg=black ctermbg=yellow
 endif
 
 set encoding=utf8
