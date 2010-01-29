@@ -9,6 +9,7 @@ if has("macunix")
     set langmenu=en
     lang en_US
     set shell=/bin/bash
+    set guifont=Menlo_Regular:h11
 elseif has("win32") || has("win64")
     lang en
     set shell=cmd.exe
@@ -69,9 +70,6 @@ autocmd! bufwritepost vimrc source ~/.vim/vimrc
 "Enable syntax hl
 syntax enable
 
-"set guifont=Menlo:h11
-set guifont=Andale_Mono:h11
-
 set cursorline
 
 if has("gui_running")
@@ -83,7 +81,7 @@ if has("gui_running")
       set antialias
 	  set fuoptions=maxvert,maxhorz
   endif
-  colorscheme fnaqevan
+  colorscheme molokai
   highlight Cursor guibg=red guifg=white
 else
   colorscheme camo
@@ -298,17 +296,17 @@ set smarttab
 set lbr
 set tw=500
 
-   """"""""""""""""""""""""""""""
-   " Indent
-   """"""""""""""""""""""""""""""
-   "Auto indent
-   set ai
+""""""""""""""""""""""""""""""
+" Indent
+""""""""""""""""""""""""""""""
+"Auto indent
+set ai
 
-   "Smart indent
-   set si
+"Smart indent
+set si
 
-   "Wrap lines
-   set wrap
+"Wrap lines
+set wrap
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -320,10 +318,11 @@ set tw=500
    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
    autocmd FileType python set omnifunc=pythoncomplete#Complete
    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags, sw=2
    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
    autocmd FileType ruby set sw=2
+   autocmd FileType text set tw=80
 
 
    """"""""""""""""""""""""""""""
