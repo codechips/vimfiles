@@ -14,6 +14,7 @@ elseif has("win32") || has("win64")
     lang en
     set shell=cmd.exe
     set shellcmdflag=/c 
+    set guifont=Consolas:h11
 endif
 
 "Sets how many lines of history VIM har to remember
@@ -385,4 +386,3 @@ let g:clj_paren_rainbow = 1
 let g:clj_highlight_contrib = 1
 let vimclojure#NailgunClient = "~/code/java/vimclojure/ng"
 
-autocmd FileType *.txt set textwidth=80
