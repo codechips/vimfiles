@@ -1,27 +1,10 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " General
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Get out of VI's compatible mode..
+
 set nocompatible
-
-" Some platform specific stuff
-if has("macunix")
-    set langmenu=en
-    lang en_US
-    set shell=/bin/bash
-    set guifont=Menlo_Regular:h11
-elseif has("win32") || has("win64")
-    lang en
-    set shell=cmd.exe
-    set shellcmdflag=/c 
-    set guifont=Consolas:h11
-endif
-
-"Sets how many lines of history VIM har to remember
 set history=400
-
-"Enable filetype plugin
 filetype plugin indent on
+set encoding=utf8
 
 "Set to auto read when a file is changed from the outside
 set autoread
@@ -40,7 +23,10 @@ nmap <leader>w :w!<cr>
 " Fuzzy finder
 nmap <leader>ff :FufFile<cr>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
+
 map § $
 imap § $
 vmap § $
@@ -67,18 +53,36 @@ nmap <right> <nop>
 set pastetoggle=<F4>
 
 "Fast editing of .vimrc
-map <leader>ce :e! ~/.vim/vimrc<cr>
-"When .vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vim/vimrc
+map <leader>ce :e! <c-r>=Get_vimrc_file()<cr><cr>
 
+"When .vimrc is edited, reload it
+autocmd! bufwritepost vimrc so %
+
+" Windows == Headache
+function! Get_vimrc_file()
+  if exists("g:vimrc_file") 
+      return g:vimrc_file
+   else
+      return "~/.vim/vimrc"
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Look and feel
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Enable syntax hl
-syntax enable
 
-set cursorline
+" Some platform specific stuff
+if has("macunix")
+    set langmenu=en
+    lang en_US
+    set shell=/bin/bash
+    set guifont=Menlo_Regular:h11
+elseif has("win32") || has("win64")
+    lang en
+    set shell=cmd.exe
+    set shellcmdflag=/c 
+    set guifont=Consolas:h9
+endif
+
+syntax enable
 
 " Set list chars
 set listchars=tab:»·,trail:·
@@ -90,17 +94,16 @@ if has("gui_running")
   let psc_style='cool'
   set lines=40 columns=180
   if has("gui_macvim")
-      set antialias
-	  set fuoptions=maxvert,maxhorz
+    set antialias
+    set fuoptions=maxvert,maxhorz
   endif
-  colorscheme molokai
+  colorscheme ir_black
   highlight Cursor guibg=red guifg=white
 else
   colorscheme camo
   hi MatchParen ctermfg=black ctermbg=yellow
 endif
 
-set encoding=utf8
 
 "Some nice mapping to switch syntax (useful if one mixes different languages in one file)
 map <leader>1 :set syntax=django<cr>
@@ -123,7 +126,7 @@ set completeopt-=preview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " User Interface
-""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "Set 4 lines to the curors - when moving vertical..
 set so=4
 
@@ -133,7 +136,7 @@ set wildmenu
 "Always show current position
 set ruler
 
-"The commandbar is 2 high
+"The commandbar is one line high
 set cmdheight=1
 
 "Show line number
@@ -172,23 +175,23 @@ set mat=2
 "Highlight search things
 set hlsearch
 
-  """"""""""""""""""""""""""""""
-  " => Statusline
-  """"""""""""""""""""""""""""""
-  "Always hide the statusline
-  set laststatus=2
+""""""""""""""""""""""""""""""
+" statusline
 
-  function! CurDir()
-     let curdir = substitute(getcwd(), '/Users/ilia/', "~/", "g")
-     return curdir
-  endfunction
+"Always hide the statusline
+set laststatus=2
 
-  "Format the statusline
-  set statusline=\ %F%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ \ \ line:\ %l/%L:%c\ \ [%{&ff}\,%{strlen(&fenc)?&fenc:&enc}]
+function! CurDir()
+ let curdir = substitute(getcwd(), '/Users/ilia/', "~/", "g")
+ return curdir
+endfunction
+
+"Format the statusline
+set statusline=\ %F%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ \ \ line:\ %l/%L:%c\ \ [%{&ff}\,%{strlen(&fenc)?&fenc:&enc}]
 
 """"""""""""""""""""""""""""""
 " Visual
-""""""""""""""""""""""""""""""
+
 " From an idea by Michael Naumann
 function! VisualSearch(direction) range
   let l:saved_reg = @"
@@ -211,17 +214,11 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
    """"""""""""""""""""""""""""""
    " => Vim Grep
    """"""""""""""""""""""""""""""
-   let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .bzr'
-
-   """"""""""""""""""""""""""""""
-   " => Yank Ring
-   """"""""""""""""""""""""""""""
-   map <leader>y :YRShow<cr>
-   let g:yankring_persist = 0
+   let Grep_Skip_Dirs = '.git .svn .bzr'
 
    """"""""""""""""""""""""""""""
    " => File explorer
@@ -254,8 +251,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-"Actually, the tab does not switch buffers, but my arrows
-"Bclose function ca be found in "Buffer related" section
 map <leader>bd :Bclose<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
@@ -280,7 +275,7 @@ imap <D-0> <esc>0i
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Files and backups
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "Turn backup off
 set nobackup
 set nowb
@@ -289,28 +284,28 @@ set encoding=utf-8 fileencodings=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "Enable folding
 set nofen
 set fdl=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 set expandtab
 set shiftwidth=4
 set tabstop=4
 
-map <leader>t2 :set shiftwidth=2<cr>
-map <leader>t4 :set shiftwidth=4<cr>
+map <leader>t2 :set sw=2<cr>
+map <leader>t4 :set sw=4<cr>
 
 set smarttab
 set lbr
-set tw=500
+set tw=78
 
 """"""""""""""""""""""""""""""
 " Indent
-""""""""""""""""""""""""""""""
+
 "Auto indent
 set ai
 
@@ -323,59 +318,57 @@ set wrap
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Filetype generic
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-   
-   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-   " Set Omni complete functions
-   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-   autocmd FileType python set omnifunc=pythoncomplete#Complete
-   autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-   autocmd FileType html set sw=2
-   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-   autocmd FileType ruby set sw=2
-   autocmd FileType text set tw=80
+
+" Set Omni complete functions
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html set sw=2
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby set sw=2
+autocmd FileType text set tw=80
 
 
-   """"""""""""""""""""""""""""""
-   " VIM
-   """"""""""""""""""""""""""""""
-   autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
-   
-   """"""""""""""""""""""""""""""
-   " Python section
-   """"""""""""""""""""""""""""""
-   "Run the current buffer in python - ie. on leader+space
-   au FileType python so ~/.vim/syntax/python.vim
-   autocmd FileType python map <buffer> <leader><space> :w!<cr>:!python %<cr>
-   autocmd FileType python so ~/.vim/plugin/python_fold.vim
+""""""""""""""""""""""""""""""
+" VIM
 
-   "Set some bindings up for 'compile' of python
-   autocmd FileType python set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-   autocmd FileType python set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 
-   "Run in the Python interpreter
-   function! Python_Eval_VSplit() range
-     let src = tempname()
-     let dst = tempname()
-     execute ": " . a:firstline . "," . a:lastline . "w " . src
-     execute ":!python " . src . " > " . dst
-     execute ":pedit! " . dst
-   endfunction
-   au FileType python vmap <F7> :call Python_Eval_VSplit()<cr> 
+""""""""""""""""""""""""""""""
+" Python section
 
-   "Press c-q instead of space (or other key) to complete the snippet
-   imap <C-q> <C-]>
+"Run the current buffer in python - ie. on leader+space
+au FileType python so ~/.vim/syntax/python.vim
+autocmd FileType python map <buffer> <leader><space> :w!<cr>:!python %<cr>
+autocmd FileType python so ~/.vim/plugin/python_fold.vim
 
-" Byt till current dir
-function! CHANGE_CURR_DIR()
+"Set some bindings up for 'compile' of python
+autocmd FileType python set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd FileType python set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+
+"Run in the Python interpreter
+function! Python_Eval_VSplit() range
+ let src = tempname()
+ let dst = tempname()
+ execute ": " . a:firstline . "," . a:lastline . "w " . src
+ execute ":!python " . src . " > " . dst
+ execute ":pedit! " . dst
+endfunction
+au FileType python vmap <F7> :call Python_Eval_VSplit()<cr> 
+
+"Press c-q instead of space (or other key) to complete the snippet
+imap <C-q> <C-]>
+
+" Change to current dir
+function! Change_to_pwd()
     let _dir = expand("%:p:h")
     exec "cd " . _dir
     unlet _dir
 endfunction
 
-autocmd BufEnter * call CHANGE_CURR_DIR() 
+autocmd BufEnter * call Change_to_pwd() 
 
 " Python stuff
 " Trim trailing whitespace
@@ -390,11 +383,4 @@ for p in sys.path:
     if os.path.isdir(p):
         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 EOF
-
-" Vimclojure
-au Bufenter, Bufnewfile *.clj setl complete+=k~/.clj_completions
-let g:clj_want_gorilla = 1
-let g:clj_paren_rainbow = 1
-let g:clj_highlight_contrib = 1
-let vimclojure#NailgunClient = "~/code/java/vimclojure/ng"
 
