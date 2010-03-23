@@ -57,8 +57,15 @@ map  <F5>  :nohlsearch<CR>
 imap <F5>  <ESC>:nohlsearch<CR>i
 vmap <F5>  <ESC>:nohlsearch<CR>gv
 
-"Fast reloading of the .vimrc
-map <leader>cs :source ~/.vim/vimrc<cr>
+" Disable arrow keys in normal mode
+nmap <up> <nop>
+nmap <down> <nop>
+nmap <left> <nop>
+nmap <right> <nop>
+
+" Set pastetoggle to F4
+set pastetoggle=<F4>
+
 "Fast editing of .vimrc
 map <leader>ce :e! ~/.vim/vimrc<cr>
 "When .vimrc is edited, reload it
@@ -72,6 +79,10 @@ autocmd! bufwritepost vimrc source ~/.vim/vimrc
 syntax enable
 
 set cursorline
+
+" Set list chars
+set listchars=tab:»·,trail:·
+set list
 
 if has("gui_running")
   set guioptions-=T
@@ -173,7 +184,7 @@ set hlsearch
   endfunction
 
   "Format the statusline
-  set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+  set statusline=\ %F%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ \ \ line:\ %l/%L:%c\ \ [%{&ff}\,%{strlen(&fenc)?&fenc:&enc}]
 
 """"""""""""""""""""""""""""""
 " Visual
@@ -319,7 +330,8 @@ set wrap
    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
    autocmd FileType python set omnifunc=pythoncomplete#Complete
    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags, sw=2
+   autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+   autocmd FileType html set sw=2
    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
    autocmd FileType ruby set sw=2
