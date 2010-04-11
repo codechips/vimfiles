@@ -23,7 +23,6 @@ nmap <leader>w :w!<cr>
 " Fuzzy finder
 nmap <leader>ff :FufFile<cr>
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 
@@ -168,9 +167,6 @@ set t_vb=
 
 "show matching bracets
 set showmatch
-
-"How many tenths of a second to blink
-set mat=2
 
 "Highlight search things
 set hlsearch
