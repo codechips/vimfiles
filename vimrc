@@ -15,7 +15,7 @@ set mouse=a
 "Set mapleader
 let mapleader = ","
 let g:mapleader = ","
-let maplocalleader = "-"
+"let maplocalleader = "-"
 
 "Fast saving
 nmap <leader>w :w!<cr>
