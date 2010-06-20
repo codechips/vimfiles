@@ -6,6 +6,9 @@ set history=400
 filetype plugin indent on
 set encoding=utf8
 
+"load plugins via pathogen
+call pathogen#runtime_append_all_bundles()
+
 "Set to auto read when a file is changed from the outside
 set autoread
 
@@ -102,14 +105,6 @@ else
   colorscheme camo
   hi MatchParen ctermfg=black ctermbg=yellow
 endif
-
-
-"Some nice mapping to switch syntax (useful if one mixes different languages in one file)
-map <leader>1 :set syntax=django<cr>
-map <leader>2 :set syntax=xhtml<cr>
-map <leader>3 :set syntax=python<cr>
-map <leader>4 :set ft=javascript<cr>
-map <leader>$ :syntax sync fromstart<cr>
 
 autocmd BufEnter * :syntax sync fromstart
 
@@ -214,7 +209,7 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
    """"""""""""""""""""""""""""""
    " => Vim Grep
    """"""""""""""""""""""""""""""
-   let Grep_Skip_Dirs = '.git .svn .bzr'
+   let Grep_Skip_Dirs = '.git .svn .bzr. .hg'
 
    """"""""""""""""""""""""""""""
    " => File explorer
@@ -332,30 +327,8 @@ autocmd FileType text set tw=80
 
 autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 
-""""""""""""""""""""""""""""""
-" Python section
-
-"Run the current buffer in python - ie. on leader+space
-au FileType python so ~/.vim/syntax/python.vim
-autocmd FileType python map <buffer> <leader><space> :w!<cr>:!python %<cr>
-autocmd FileType python so ~/.vim/plugin/python_fold.vim
-
-"Set some bindings up for 'compile' of python
-autocmd FileType python set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-autocmd FileType python set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-
-"Run in the Python interpreter
-function! Python_Eval_VSplit() range
- let src = tempname()
- let dst = tempname()
- execute ": " . a:firstline . "," . a:lastline . "w " . src
- execute ":!python " . src . " > " . dst
- execute ":pedit! " . dst
-endfunction
-au FileType python vmap <F7> :call Python_Eval_VSplit()<cr> 
-
 "Press c-q instead of space (or other key) to complete the snippet
-imap <C-q> <C-]>
+"imap <C-q> <C-]>
 
 " Change to current dir
 function! Change_to_pwd()
@@ -369,14 +342,4 @@ autocmd BufEnter * call Change_to_pwd()
 " Python stuff
 " Trim trailing whitespace
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-
-" Make gf work (C-w, C-f) ... sometimes
-python << EOF
-import os
-import sys
-import vim
-for p in sys.path:
-    if os.path.isdir(p):
-        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-EOF
 
