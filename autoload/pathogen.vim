@@ -108,9 +108,9 @@ function! pathogen#runtime_append_all_bundles(...) " {{{1
   let list = []
   for dir in pathogen#split(&rtp)
     if dir =~# '\<after$'
-      let list +=  pathogen#glob_directories(substitute(dir,'after$',name,'').sep.'*[^~]'.sep.'after') + [dir]
+      let list +=  pathogen#glob_directories(substitute(dir,'after$',name,'').sep.'*'.sep.'after') + [dir]
     else
-      let list +=  [dir] + pathogen#glob_directories(dir.sep.name.sep.'*[^~]')
+      let list +=  [dir] + pathogen#glob_directories(dir.sep.name.sep.'*')
     endif
   endfor
   let &rtp = pathogen#join(pathogen#uniq(list))

@@ -3,11 +3,12 @@
 
 set nocompatible
 set history=400
-filetype plugin indent on
-set encoding=utf8
 
 "load plugins via pathogen
 call pathogen#runtime_append_all_bundles()
+
+filetype plugin indent on
+set encoding=utf8
 
 "Set to auto read when a file is changed from the outside
 set autoread
