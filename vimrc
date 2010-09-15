@@ -45,6 +45,12 @@ map! <D-8> {
 map! <D-9> }
 
 
+" Some insert mode moving commands
+imap <C-u> <ESC>kA
+imap <C-e> <ESC>A
+imap <C-l> <C-o>l
+imap <C-h> <C-o>h
+
 map <leader>t2 :set sw=2<cr>
 map <leader>t4 :set sw=4<cr>
 
@@ -67,6 +73,11 @@ map <C-l> <C-W>l
 map <leader>bd :Bclose<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
+
+" Do :help cope if you are unsure what cope is. It's super useful!
+map <leader>cc :botright cope<cr>
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
 
 "Tab configuration
 map <leader>tn :tabnew %<cr>
@@ -119,7 +130,7 @@ if has("macunix")
     set langmenu=en
     lang en_US
     set shell=/bin/bash
-    set guifont=Menlo_Regular:h11
+    set guifont=Menlo_Regular:h10
 elseif has("win32") || has("win64")
     lang en
     set shell=cmd.exe
@@ -143,7 +154,7 @@ if has("gui_running")
     set antialias
     set fuoptions=maxvert,maxhorz
   endif
-  colorscheme ir_black
+  colorscheme molokai
   highlight Cursor guibg=red guifg=white
 else
   colorscheme camo
@@ -156,8 +167,8 @@ if has("gui_running")
 endif
 
 " Omnicompletion menu colors
-hi Pmenu guibg=#1a293f
-hi PmenuSel guibg=#54657d guifg=#ffffff
+hi Pmenu guibg=#999900 guifg=#000000
+hi PmenuSel guibg=#000000 guifg=#dddddd
 set completeopt-=preview
 
 " User Interface
@@ -237,14 +248,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Vim grep
 let Grep_Skip_Dirs = '.git .svn .bzr. .hg'
 
-" Vimclojure stuff
-let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
 
-" ---------------------------------------------------------------------------
 "  Automagic Clojure folding on defn's and defmacro's
-"
-function GetClojureFold()
+function! GetClojureFold()
       if getline(v:lnum) =~ '^\s*(defn.*\s'
             return ">1"
       elseif getline(v:lnum) =~ '^\s*(defmacro.*\s'
@@ -275,7 +282,7 @@ function GetClojureFold()
       endif
 endfunction
 
-function TurnOnClojureFolding()
+function! TurnOnClojureFolding()
       setlocal foldexpr=GetClojureFold()
       setlocal foldmethod=expr
 endfunction
