@@ -1,0 +1,16 @@
+ack.vim
+delimitMate
+nerdcommenter
+nerdtree
+snipmate.vim
+sparkup
+supertab
+taglist.vim
+tslime.vim
+vim-clojure
+vim-fuzzyfinder
+vim-markdown
+vim-matchit
+vim-ruby
+vim-sparkup
+vimclojure
