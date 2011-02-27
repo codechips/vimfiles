@@ -1,4 +1,6 @@
 .DS_Store
 .bzr*
 .netrwhist
-bundle
+bundle/vim-clojure
+bundle/vim-fuzzyfinder/
+bundle/*clojure*

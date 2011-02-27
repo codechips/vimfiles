@@ -44,7 +44,6 @@ map  <D-9> }
 map! <D-8> {
 map! <D-9> }
 
-
 " Some insert mode moving commands
 imap <C-u> <ESC>kA
 imap <C-e> <ESC>A
@@ -79,7 +78,7 @@ map <leader>cc :botright cope<cr>
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
 
-"Tab configuration
+" Tab configuration
 map <leader>tn :tabnew %<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
@@ -89,6 +88,9 @@ try
   set stal=2
 catch
 endtry
+
+map <c-j> :tabprevious<CR>
+map <c-k> :tabnext<CR>
 
 imap <m-$> <esc>$a
 imap <m-0> <esc>0i
@@ -130,7 +132,7 @@ if has("macunix")
     set langmenu=en
     lang en_US
     set shell=/bin/bash
-    set guifont=Menlo_Regular:h10
+    set guifont=Bitstream_Vera_Sans_Mono:h10
 elseif has("win32") || has("win64")
     lang en
     set shell=cmd.exe
@@ -146,24 +148,33 @@ set listchars=tab:»·,trail:·
 set list
 
 if has("gui_running")
-  set guioptions-=T
+  "set guioptions-=T
+  set guioptions=aAc
+  "set guioptions=aAce
+  set showtabline=1
   set background=dark
   let psc_style='cool'
-  set lines=40 columns=180
   if has("gui_macvim")
     set antialias
     set fuoptions=maxvert,maxhorz
   endif
-  colorscheme molokai
+  colorscheme inspiration810984
   highlight Cursor guibg=red guifg=white
 else
-  colorscheme camo
+  colorscheme ir_dark
   hi MatchParen ctermfg=black ctermbg=yellow
 endif
+
+augroup BgHighlight
+    autocmd WinEnter * hi StatusLine guibg=#cccc00 guifg=Black
+    autocmd WinLeave * hi StatusLine guibg=DarkSlateGray guifg=White
+augroup END
+
 
 " Highlight current line
 if has("gui_running")
   set cursorline
+  hi CursorLine guibg=#222222
 endif
 
 " Omnicompletion menu colors
@@ -182,11 +193,10 @@ set lz                          " Do not redraw, when running macros.. lazyredra
 set hid                         " Change buffer - without saving
 set magic
 set showmatch                   " Show matching bracets
+set linespace=2                 " Increase spacint b/w lines
 
 " Turn the errors off
-set noerrorbells
-set novisualbell
-set t_vb=
+set vb t_vb=
 
 " Statusline
 set laststatus=2                " Always show statusline
@@ -240,7 +250,7 @@ function! Change_to_pwd()
     unlet _dir
 endfunction
 
-autocmd BufEnter * call Change_to_pwd()
+" autocmd BufEnter * call Change_to_pwd()
 
 " Trim trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
@@ -249,6 +259,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 let Grep_Skip_Dirs = '.git .svn .bzr. .hg'
 
 let g:vimclojure#ParenRainbow=1
+let vimclojure#HighlightBuiltins=1
+let vimclojure#HighlightContrib=1
+let vimclojure#DynamicHighlighting=1
+"let vimclojure#WantNailgun=1
 
 "  Automagic Clojure folding on defn's and defmacro's
 function! GetClojureFold()

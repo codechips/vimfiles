@@ -1,0 +1,45 @@
+[submodule "bundle/ack.vim"]
+	path = bundle/ack.vim
+	url = http://github.com/mileszs/ack.vim.git
+[submodule "bundle/command-t"]
+	path = bundle/command-t
+	url = ttp://github.com/wincent/Command-T.git
+[submodule "bundle/delimitMate"]
+	path = bundle/delimitMate
+	url = http://github.com/Raimondi/delimitMate.git
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = http://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = http://github.com/scrooloose/nerdtree.git
+[submodule "bundle/snipmate.vim"]
+	path = bundle/snipmate.vim
+	url = http://github.com/msanders/snipmate.vim.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = http://github.com/ervandew/supertab.git
+[submodule "bundle/tabular"]
+	path = bundle/tabular
+	url = http://github.com/godlygeek/tabular.git
+[submodule "bundle/taglist.vim"]
+	path = bundle/taglist.vim
+	url = http://github.com/esukram/taglist.vim.git
+[submodule "bundle/tslime.vim"]
+	path = bundle/tslime.vim
+	url = http://github.com/kikijump/tslime.vim.git
+[submodule "bundle/vim-fugitive"]
+	path = bundle/vim-fugitive
+	url = http://github.com/tpope/vim-fugitive.git
+[submodule "bundle/vim-matchit"]
+	path = bundle/vim-matchit
+	url = http://github.com/tsaleh/vim-matchit.git
+[submodule "bundle/vim-rails"]
+	path = bundle/vim-rails
+	url = git://github.com/tpope/vim-rails.git
+[submodule "bundle/vim-ruby"]
+	path = bundle/vim-ruby
+	url = http://github.com/vim-ruby/vim-ruby.git
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = http://github.com/tpope/vim-surround.git
