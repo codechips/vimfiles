@@ -43,3 +43,12 @@
 [submodule "bundle/vim-surround"]
 	path = bundle/vim-surround
 	url = http://github.com/tpope/vim-surround.git
+[submodule "bundle/vim-slim"]
+	path = bundle/vim-slim
+	url = https://github.com/bbommarito/vim-slim.git
+[submodule "bundle/vim-solarized-scheme"]
+	path = bundle/vim-solarized-scheme
+	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/jasmine.vim"]
+	path = bundle/jasmine.vim
+	url = https://github.com/claco/jasmine.vim

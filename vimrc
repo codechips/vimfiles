@@ -29,13 +29,16 @@ filetype plugin indent on
 
 " Mappings
 
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = " "
+let g:mapleader = " "
 
 map  § $
 imap § $
 vmap § $
 cmap § $
+
+vmap > >gv
+vmap < <gv
 
 map  <D-7> \
 map! <D-7> \
@@ -59,22 +62,11 @@ nmap <down> <nop>
 nmap <left> <nop>
 nmap <right> <nop>
 
-"Map space to / and c-space to ?
-map <space> /
-map <c-space> ?
-
-"Smart way to move btw. windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
 map <leader>bd :Bclose<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
 
 " Do :help cope if you are unsure what cope is. It's super useful!
-map <leader>cc :botright cope<cr>
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
 
@@ -132,7 +124,7 @@ if has("macunix")
     set langmenu=en
     lang en_US
     set shell=/bin/bash
-    set guifont=Bitstream_Vera_Sans_Mono:h10
+    set guifont=Menlo_Regular:h10
 elseif has("win32") || has("win64")
     lang en
     set shell=cmd.exe
@@ -161,7 +153,6 @@ if has("gui_running")
   colorscheme inspiration810984
   highlight Cursor guibg=red guifg=white
 else
-  colorscheme ir_dark
   hi MatchParen ctermfg=black ctermbg=yellow
 endif
 
@@ -241,7 +232,7 @@ autocmd FileType javascript,html,ruby,css set sw=2
 autocmd FileType text set tw=80
 
 " VIM
-autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
+autocmd FileType vim map <buffer> <leader>r :w!<cr>:source %<cr>
 
 " Change to current dir
 function! Change_to_pwd()
