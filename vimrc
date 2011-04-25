@@ -24,7 +24,29 @@ set ignorecase                  " Ignore case when searching
 set incsearch
 set hlsearch                    " Highlight search results
 
-call pathogen#runtime_append_all_bundles() " Load plugins via pathogen
+filetype off
+
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-matchit'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-cucumber'
+Bundle 'ervandew/supertab'
+Bundle 'hallison/vim-ruby-sinatra'
+Bundle 'msanders/snipmate.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'Raimondi/delimitMate'
+Bundle 'vim-scripts/taglist.vim'
+Bundle 'godlygeek/tabular'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'FuzzyFinder'
+Bundle 'bufexplorer.zip'
+
 filetype plugin indent on
 
 " Mappings
@@ -135,17 +157,10 @@ endif
 syntax enable
 autocmd BufEnter * :syntax sync fromstart
 
-" Show tabs and spaces
-set listchars=tab:»·,trail:·
-set list
 
 if has("gui_running")
-  "set guioptions-=T
   set guioptions=aAc
-  "set guioptions=aAce
   set showtabline=1
-  set background=dark
-  let psc_style='cool'
   if has("gui_macvim")
     set antialias
     set fuoptions=maxvert,maxhorz
@@ -161,7 +176,6 @@ augroup BgHighlight
     autocmd WinLeave * hi StatusLine guibg=DarkSlateGray guifg=White
 augroup END
 
-
 " Highlight current line
 if has("gui_running")
   set cursorline
@@ -173,8 +187,13 @@ hi Pmenu guibg=#999900 guifg=#000000
 hi PmenuSel guibg=#000000 guifg=#dddddd
 set completeopt-=preview
 
+" Show tabs and spaces
+set listchars=tab:»·,trail:·
+set list
+
 " User Interface
 
+set background=dark
 set scrolloff=2                 " Set 2 lines to the curors - when moving vertical..
 set wildmenu                    " Turn on WiLd menu
 set ruler                       " Always show current position
