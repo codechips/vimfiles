@@ -26,7 +26,7 @@ set hlsearch                    " Highlight search results
 
 filetype off
 
-set rtp+=~/.vim/vundle.git/
+set rtp+=~/.vim/vundle/
 call vundle#rc()
 
 Bundle 'tpope/vim-fugitive'
@@ -48,6 +48,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'bufexplorer.zip'
+Bundle 'kchmck/vim-coffee-script'
 
 filetype plugin indent on
 
@@ -86,13 +87,16 @@ nmap <down> <nop>
 nmap <left> <nop>
 nmap <right> <nop>
 
-map <leader>bd :Bclose<cr>
+map <leader>bd :bd<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
 
 " Do :help cope if you are unsure what cope is. It's super useful!
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
+
+" Quickfix toggle
+map <leader>ct :Ctoggle<cr>
 
 " Tab configuration
 map <leader>tn :tabnew %<cr>
@@ -104,9 +108,6 @@ try
   set stal=2
 catch
 endtry
-
-map <c-j> :tabprevious<CR>
-map <c-k> :tabnext<CR>
 
 imap <m-$> <esc>$a
 imap <m-0> <esc>0i
@@ -255,6 +256,21 @@ autocmd FileType text set tw=80
 " VIM
 autocmd FileType vim map <buffer> <leader>r :w!<cr>:source %<cr>
 
+" Qickfix Toggle
+function! s:qf_toggle()
+  for i in range(1, winnr('$'))
+    let bnum = winbufnr(i)
+    if getbufvar(bnum, '&buftype') == 'quickfix'
+      cclose
+      return
+    endif
+  endfor
+
+  botright copen
+endfunction
+
+command! Ctoggle call s:qf_toggle()
+
 " Change to current dir
 function! Change_to_pwd()
     let _dir = expand("%:p:h")
@@ -315,3 +331,4 @@ endfunction
 
 autocmd FileType clojure call TurnOnClojureFolding()
 
+let javaScript_fold=1
