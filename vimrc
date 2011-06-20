@@ -31,7 +31,7 @@ call vundle#rc()
 
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-matchit'
+Bundle 'vim-matchit'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-cucumber'
 Bundle 'ervandew/supertab'
@@ -49,6 +49,11 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'bufexplorer.zip'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'davidoc/taskpaper.vim'
+Bundle 'gregsexton/gitv'
+Bundle 'JSON.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'serverhorror/javascript.vim'
 
 filetype plugin indent on
 
@@ -90,6 +95,10 @@ nmap <right> <nop>
 map <leader>bd :bd<cr>
 map <C-l> :bn<cr>
 map <C-h> :bp<cr>
+
+" Window movement
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
 
 " Do :help cope if you are unsure what cope is. It's super useful!
 map <leader>n :cn<cr>
@@ -144,6 +153,22 @@ endfunction
 
 " Look and feel
 
+" User Interface
+
+set background=dark
+set scrolloff=2                 " Set 2 lines to the curors - when moving vertical..
+set wildmenu                    " Turn on WiLd menu
+set ruler                       " Always show current position
+set cmdheight=1                 " The commandbar is one line high
+set number                      " Show line number
+set lz                          " Do not redraw, when running macros.. lazyredraw
+set hid                         " Change buffer - without saving
+set magic
+set showmatch                   " Show matching bracets
+set linespace=2                 " Increase spacint b/w lines
+set wmh=0                       " Set window min height for stacking
+
+
 " Some platform specific stuff
 if has("macunix")
     set langmenu=en
@@ -160,7 +185,6 @@ endif
 syntax enable
 autocmd BufEnter * :syntax sync fromstart
 
-
 if has("gui_running")
   set guioptions=aAc
   set showtabline=1
@@ -168,15 +192,16 @@ if has("gui_running")
     set antialias
     set fuoptions=maxvert,maxhorz
   endif
-  colorscheme inspiration810984
+  colorscheme inspiration761937
   highlight Cursor guibg=red guifg=white
 else
   hi MatchParen ctermfg=black ctermbg=yellow
+  colorscheme baycomb
 endif
 
 augroup BgHighlight
-    autocmd WinEnter * hi StatusLine guibg=#cccc00 guifg=Black
-    autocmd WinLeave * hi StatusLine guibg=DarkSlateGray guifg=White
+  autocmd WinEnter * hi StatusLine guibg=#dddd00 guifg=Black
+  autocmd WinLeave * hi StatusLineNC guibg=#aaaaaa guifg=#444444
 augroup END
 
 " Highlight current line
@@ -194,20 +219,6 @@ set completeopt-=preview
 set listchars=tab:»·,trail:·
 set list
 
-" User Interface
-
-set background=dark
-set scrolloff=2                 " Set 2 lines to the curors - when moving vertical..
-set wildmenu                    " Turn on WiLd menu
-set ruler                       " Always show current position
-set cmdheight=1                 " The commandbar is one line high
-set number                      " Show line number
-set lz                          " Do not redraw, when running macros.. lazyredraw
-set hid                         " Change buffer - without saving
-set magic
-set showmatch                   " Show matching bracets
-set linespace=2                 " Increase spacint b/w lines
-
 " Turn the errors off
 set vb t_vb=
 
@@ -220,7 +231,7 @@ function! CurDir()
 endfunction
 
 "Format the statusline
-set statusline=\ %F%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ \ \ line:\ %l/%L:%c\ \ [%{&ff}\,%{strlen(&fenc)?&fenc:&enc}]
+set statusline=[%n]\ %t%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ %=(%{strlen(&ft)?&ft:'none'})\ %{&ff}\,%{strlen(&fenc)?&fenc:&enc}
 
 function! VisualSearch(direction) range
   let l:saved_reg = @"
@@ -332,3 +343,4 @@ endfunction
 autocmd FileType clojure call TurnOnClojureFolding()
 
 let javaScript_fold=1
+au BufRead,BufNewFile *.json set filetype=json
