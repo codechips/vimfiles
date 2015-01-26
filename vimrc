@@ -1,67 +1,127 @@
+" Essential
+language en_US
 set nocompatible
-set history=400
-set encoding=utf8
-set autoread                    " Set to auto read when a file is changed from the outside
-set mouse=a                     " Have the mouse enabled all the time
-set nobackup                    " Don't create file backups
-set nowb
-set noswapfile                  " Turn off swapfile
+set history=1000
+set encoding=utf-8
+scriptencoding utf-8
+set autoread
+set visualbell
+set nobackup
+set noswapfile
 
 " Text options
-set expandtab                   " Convert tabs to spaces
-set shiftwidth=4
-set tabstop=4
-set smarttab
-set lbr
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set noexpandtab
+set linebreak
 set textwidth=78
 set autoindent
 set smartindent
-set wrap                        " Wrap lines
+set nowrap
+set pastetoggle=<F4>
 
-set backspace=eol,start,indent  " allow backspacing over everything in insert mode
-set whichwrap+=<,>,h,l          " Backspace and cursor keys wrap to
-set ignorecase                  " Ignore case when searching
+" Misc
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+set ignorecase
 set incsearch
-set hlsearch                    " Highlight search results
+set hlsearch
+set iskeyword+=_,$,@,%,#
+set splitright
+set synmaxcol=200
 
+" Look and feel
+set scrolloff=2
+set ruler
+set cmdheight=1
+set number
+set hid
+set magic
+set noshowmatch
+set linespace=2
+set wmh=0
+set laststatus=2
+set wildmenu
+set listchars=tab:›\ ,trail:·,eol:¬
+let loaded_matchparen = 1
+
+" set shell
+if $SHELL =~ 'fish'
+  set shell=/usr/local/bin/bash
+endif
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
+" MacVim settings
+if has("gui_running")
+  set guifont=MonospaceTypewriter\ for\ Powerline:h12
+  colorscheme ir_black
+  hi clear CursorLine
+  hi CursorLineNr guibg=#333333 guifg=Yellow
+  set cursorline
+
+  if has("gui_macvim")
+    set antialias
+    set fuoptions=maxvert,maxhorz
+    set guioptions-=m
+    set guioptions-=R
+    set guioptions-=L
+    set guioptions-=l
+    set guioptions-=r
+    set showtabline=0
+
+    macm Window.Select\ Previous\ Tab key=<D-Left>
+    macm Window.Select\ Next\ Tab key=<D-Right>
+    macm Window.Toggle\ Full\ Screen\ Mode key=<D-Return>
+  endif
+endif
+
+" Vundle init and packages
 filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
 
-set rtp+=~/.vim/vundle/
-call vundle#rc()
+call vundle#begin()
 
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails'
-Bundle 'vim-matchit'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-cucumber'
-Bundle 'ervandew/supertab'
-Bundle 'msanders/snipmate.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'Raimondi/delimitMate'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'git://git.wincent.com/command-t.git'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'bufexplorer.zip'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'davidoc/taskpaper.vim'
-Bundle 'gregsexton/gitv'
-Bundle 'JSON.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'serverhorror/javascript.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'matchit.zip'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'kien/ctrlp.vim'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'scrooloose/syntastic'
+Plugin 'elzr/vim-json'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'paradigm/TextObjectify'
+Plugin 'fatih/vim-go'
+Plugin 'majutsushi/tagbar'
+Plugin 'ervandew/supertab'
+Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'itchyny/lightline.vim'
+Plugin 'dag/vim-fish'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'mustache/vim-mustache-handlebars'
+
+call vundle#end()
 
 filetype plugin indent on
 
-" Mappings
-
-let mapleader = " "
-let g:mapleader = " "
-
+" Mappings  """""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader = "\<space>"
+let g:mapleader = "\<space>"
+inoremap jk <esc>
 map  § $
 imap § $
 vmap § $
@@ -70,33 +130,37 @@ cmap § $
 vmap > >gv
 vmap < <gv
 
-map  <D-7> \
-map! <D-7> \
 map  <D-8> {
 map  <D-9> }
 map! <D-8> {
 map! <D-9> }
 
 " Some insert mode moving commands
-imap <C-u> <ESC>kA
-imap <C-e> <ESC>A
-imap <C-l> <C-o>l
-imap <C-h> <C-o>h
+inoremap <C-u> <ESC>kA
+inoremap <C-e> <ESC>A
+inoremap <C-l> <C-o>l
+inoremap <C-h> <C-o>h
 
 map <leader>t2 :set sw=2<cr>
 map <leader>t4 :set sw=4<cr>
 
 " Disable arrow keys in normal mode
-nmap <up> <nop>
-nmap <down> <nop>
-nmap <left> <nop>
-nmap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+
+" window navigation shortcuts, ctrl h j k l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 map <leader>bd :bd<cr>
-map <C-l> :bn<cr>
-map <C-h> :bp<cr>
+nnoremap L :bn<cr>
+nnoremap H :bp<cr>
 
-" Window movement
+" Stack window movement
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 
@@ -112,162 +176,63 @@ map <leader>tn :tabnew %<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-try
-  set switchbuf=usetab
-  set stal=2
-catch
-endtry
+map <c-h> :tabprevious<cr>
+map <c-l> :tabnext<cr>
 
-imap <m-$> <esc>$a
-imap <m-0> <esc>0i
-imap <D-$> <esc>$a
-imap <D-0> <esc>0i
+inoremap <m-$> <esc>$a
+inoremap <m-0> <esc>0i
+inoremap <D-$> <esc>$a
+inoremap <D-0> <esc>0i
+
+" faster buffer switching
+nnoremap <leader>s :b#<cr>
+nnoremap <leader>b :CtrlPBuffer<cr>
+
+" destroy buffer, preserve split
+nnoremap <silent> <leader>Q :bp\|bd #<cr>
+
+" yank-ring
+let g:yankstack_map_keys = 0
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nnoremap <silent> <leader>w :w!<cr>
+nnoremap <silent> <C-s> :w!<cr>
 
-" Fuzzy finder
-nmap <leader>ff :FufFile<cr>
+" Tag navigation
+noremap gt <C-]>
+noremap gT <C-t>
+
+" No more ex mode
+nnoremap Q <nop>
 
 " F-buttons
-map <F2> :NERDTreeToggle<CR>
-set pastetoggle=<F4>
-map  <F5>  :nohlsearch<CR>
-imap <F5>  <ESC>:nohlsearch<CR>i
-vmap <F5>  <ESC>:nohlsearch<CR>gv
-" <F6> is used for colorscheme switching
+nnoremap <silent> <F2> :NERDTreeToggle<cr>
+nnoremap <silent> <F9> :TagbarToggle<CR>
+nnoremap <cr> :noh<cr><esc>
 
-"Fast editing of .vimrc
-map <leader>ce :e! <c-r>=Get_vimrc_file()<cr><cr>
+nnoremap <silent> <leader>ff :%!js-beautify -t -a -k --good-stuff -f -<CR>
+nnoremap <silent> <leader>l :setlocal list!<cr>
+nnoremap <silent> <leader>c :setlocal cursorline!<cr>
 
-"When .vimrc is edited, reload it
+" open current buffer in new tab ie maximize window
+nnoremap <leader>0 :tabedit %<cr>
+
+nnoremap <leader>oc :tabedit $MYVIMRC<cr>
+nnoremap <leader>ot :tabedit ~/Dropbox/notes/todo.txt<cr>
+nnoremap <leader>oq :tabedit ~/Dropbox/notes/quotes.txt<cr>
+nnoremap <leader>oi :tabedit ~/Dropbox/notes/ideas.txt<cr>
+
+cabbrev W w
+
+nnoremap <leader>a :call SearchCurrentWord()<cr>
+
+" When .vimrc is edited, reload it
 autocmd! bufwritepost vimrc so %
-
-" Windows == Headache
-function! Get_vimrc_file()
-  if exists("g:vimrc_file")
-      return g:vimrc_file
-   else
-      return "~/.vim/vimrc"
-endfunction
-
-" Look and feel
-
-" User Interface
-
-set background=dark
-set scrolloff=2                 " Set 2 lines to the curors - when moving vertical..
-set wildmenu                    " Turn on WiLd menu
-set ruler                       " Always show current position
-set cmdheight=1                 " The commandbar is one line high
-set number                      " Show line number
-set lz                          " Do not redraw, when running macros.. lazyredraw
-set hid                         " Change buffer - without saving
-set magic
-set showmatch                   " Show matching bracets
-set linespace=2                 " Increase spacint b/w lines
-set wmh=0                       " Set window min height for stacking
-
-
-" Some platform specific stuff
-if has("macunix")
-    set langmenu=en
-    lang en_US
-    set shell=/bin/bash
-    set guifont=Menlo_Regular:h10
-elseif has("win32") || has("win64")
-    lang en
-    set shell=cmd.exe
-    set shellcmdflag=/c
-    set guifont=Consolas:h9
-endif
-
-syntax enable
-autocmd BufEnter * :syntax sync fromstart
-
-if has("gui_running")
-  set guioptions=aAc
-  set showtabline=1
-  if has("gui_macvim")
-    set antialias
-    set fuoptions=maxvert,maxhorz
-  endif
-  colorscheme inspiration761937
-  highlight Cursor guibg=red guifg=white
-else
-  hi MatchParen ctermfg=black ctermbg=yellow
-  colorscheme baycomb
-endif
-
-augroup BgHighlight
-  autocmd WinEnter * hi StatusLine guibg=#dddd00 guifg=Black
-  autocmd WinLeave * hi StatusLineNC guibg=#aaaaaa guifg=#444444
-augroup END
-
-" Highlight current line
-if has("gui_running")
-  set cursorline
-  hi CursorLine guibg=#222222
-endif
-
-" Omnicompletion menu colors
-hi Pmenu guibg=#999900 guifg=#000000
-hi PmenuSel guibg=#000000 guifg=#dddddd
-set completeopt-=preview
-
-" Show tabs and spaces
-set listchars=tab:»·,trail:·
-set list
-
-" Turn the errors off
-set vb t_vb=
-
-" Statusline
-set laststatus=2                " Always show statusline
-
-function! CurDir()
- let curdir = substitute(getcwd(), '/Users/ilia/', "~/", "g")
- return curdir
-endfunction
-
-"Format the statusline
-set statusline=[%n]\ %t%m%r%h\ %w\ \ cwd:\ %r%{CurDir()}%h\ %=(%{strlen(&ft)?&ft:'none'})\ %{&ff}\,%{strlen(&fenc)?&fenc:&enc}
-
-function! VisualSearch(direction) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-  if a:direction == 'b'
-    execute "normal ?" . l:pattern . "^M"
-  else
-    execute "normal /" . l:pattern . "^M"
-  endif
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-
-" Enable folding
-set nofen
-set fdl=0
-
-" Set Omni complete functions
-
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType javascript,html,ruby,css set sw=2
-autocmd FileType text set tw=80
-
-" VIM
 autocmd FileType vim map <buffer> <leader>r :w!<cr>:source %<cr>
 
-" Qickfix Toggle
+" Helper functions
 function! s:qf_toggle()
   for i in range(1, winnr('$'))
     let bnum = winbufnr(i)
@@ -282,65 +247,87 @@ endfunction
 
 command! Ctoggle call s:qf_toggle()
 
-" Change to current dir
-function! Change_to_pwd()
-    let _dir = expand("%:p:h")
-    exec "cd " . _dir
-    unlet _dir
+function! SearchCurrentWord()
+   let l:wuc = expand("<cword>")
+   execute ":Ag " . l:wuc
 endfunction
-
-" autocmd BufEnter * call Change_to_pwd()
 
 " Trim trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Vim grep
-let Grep_Skip_Dirs = '.git .svn .bzr. .hg'
+" Javascript
+au BufRead,BufNewFile *.js set ft=javascript syntax=javascript
+au FileType javascript setlocal ts=2 sw=2 noexpandtab
 
-let g:vimclojure#ParenRainbow=1
-let vimclojure#HighlightBuiltins=1
-let vimclojure#HighlightContrib=1
-let vimclojure#DynamicHighlighting=1
-"let vimclojure#WantNailgun=1
+" Plugins """""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"  Automagic Clojure folding on defn's and defmacro's
-function! GetClojureFold()
-      if getline(v:lnum) =~ '^\s*(defn.*\s'
-            return ">1"
-      elseif getline(v:lnum) =~ '^\s*(defmacro.*\s'
-            return ">1"
-      elseif getline(v:lnum) =~ '^\s*(defmethod.*\s'
-            return ">1"
-      elseif getline(v:lnum) =~ '^\s*$'
-            let my_cljnum = v:lnum
-            let my_cljmax = line("$")
+" SuperTab
+let g:SuperTabDefaultCompletionType="context"
 
-            while (1)
-                  let my_cljnum = my_cljnum + 1
-                  if my_cljnum > my_cljmax
-                        return "<1"
-                  endif
+" NERDTree
+let NERDTreeWinSize = 45
+let NERDTreeHighlightCursorline = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
 
-                  let my_cljdata = getline(my_cljnum)
+" Tagbar
+let g:tagbar_width = 45
+let g:tagbar_autofocus = 1
+let g:tagbar_compact = 1
+let g:tagbar_sort = 1
+let g:tagbar_iconchars = ['▸', '▾']
 
-                  " If we match an empty line, stop folding
-                  if my_cljdata =~ '^$'
-                        return "<1"
-                  else
-                        return "="
-                  endif
-            endwhile
-      else
-            return "="
-      endif
-endfunction
+" Syntastic
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_javascript_checkers = ['eslint']
+sign define SyntasticError text=▸ linehl=Red texthl=SyntasticErrorSign
 
-function! TurnOnClojureFolding()
-      setlocal foldexpr=GetClojureFold()
-      setlocal foldmethod=expr
-endfunction
+" vim-json
+let g:vim_json_syntax_conceal = 0
 
-autocmd FileType clojure call TurnOnClojureFolding()
+" ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-let javaScript_fold=1
-au BufRead,BufNewFile *.json set filetype=json
+" vim-go
+let g:go_fmt_command = "goimports"
+
+" Turn off preview window
+set completeopt-=preview
+
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+au FileType go nmap <Leader>gd :GoDef<cr>
+
+" lightline
+let g:lightline = {
+  \ 'active': {
+  \   'left': [['mode', 'paste'], ['fugitive', 'filename', 'ctrlpmark', 'modified']],
+  \   'right': [['syntastic', 'lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
+  \ },
+  \ 'component': {
+  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+  \ },
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': '|', 'right': '|' }
+  \ }
+
+" Custom colors """"""""""""""""""""""""""""""""""""""""
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax off
+
+hi Pmenu                    ctermbg=25  ctermfg=233
+hi PmenuSel                 ctermbg=148 ctermfg=233
+hi CursorLine               ctermbg=234 ctermfg=none cterm=none
+hi! SystasticErrorSign      ctermbg=1   ctermfg=255
+hi SpellCap                 ctermfg=1   ctermbg=37
+hi SignColumn               ctermbg=233
+hi Search                   ctermbg=198 ctermfg=255 cterm=none

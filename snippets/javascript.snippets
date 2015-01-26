@@ -1,0 +1,42 @@
+snippet rq
+	${1:module} = require('${2:$1}')${3}
+
+snippet cb
+	function (${1:error}, ${2:data}) {
+		${3}
+	}
+
+snippet fn
+	function ${1}(${2}) {
+		${3:// some js shit and stuff}
+	}
+
+snippet alog
+	console.log('>> ${1}', ${2:$1});
+
+snippet log
+	console.log(${1});
+
+snippet eyes
+	require('eyes').inspect(${1});
+
+snippet describe
+	describe('${1:sut}', function () {
+		${2}
+	});
+
+snippet before
+	before(function (${1:done}) {
+		${2}
+	});
+
+snippet it
+	it('${1:should}', function (${2:done}) {
+		${3}
+	});
+
+snippet ter
+	${1} ? ${2} : ${3}
+
+snippet or
+	${1:ref} = ${2:$1} || ${3};${4}
