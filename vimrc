@@ -1,5 +1,4 @@
 " Essential
-language en_US
 set nocompatible
 set history=1000
 set encoding=utf-8
@@ -46,19 +45,14 @@ set wildmenu
 set listchars=tab:›\ ,trail:·,eol:¬
 let loaded_matchparen = 1
 
-" set shell
-if $SHELL =~ 'fish'
-  set shell=/usr/local/bin/bash
-endif
-
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 
 " MacVim settings
 if has("gui_running")
   set guifont=MonospaceTypewriter\ for\ Powerline:h12
-  colorscheme ir_black
+	colorscheme ir_black
   hi clear CursorLine
   hi CursorLineNr guibg=#333333 guifg=Yellow
   set cursorline
@@ -88,7 +82,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'matchit.zip'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
@@ -112,10 +105,17 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'dag/vim-fish'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'chriskempson/base16-vim'
+Plugin 'veegee/cql-vim'
+Plugin 'Raimondi/delimitMate'
+" Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 
 filetype plugin indent on
+
+syntax on
+colors industry
 
 " Mappings  """""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -191,6 +191,9 @@ nnoremap <leader>b :CtrlPBuffer<cr>
 " destroy buffer, preserve split
 nnoremap <silent> <leader>Q :bp\|bd #<cr>
 
+" Reselect pasted text
+nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]""`]`"
+
 " yank-ring
 let g:yankstack_map_keys = 0
 nmap <leader>p <Plug>yankstack_substitute_older_paste
@@ -259,6 +262,12 @@ autocmd BufWritePre * :%s/\s\+$//e
 au BufRead,BufNewFile *.js set ft=javascript syntax=javascript
 au FileType javascript setlocal ts=2 sw=2 noexpandtab
 
+" Markdown
+au FileType markdown setlocal ts=2 sw=2 expandtab
+
+" Yaml
+au FileType yaml setlocal ts=2 sw=2 expandtab
+
 " Plugins """""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -281,9 +290,10 @@ let g:tagbar_iconchars = ['▸', '▾']
 " Syntastic
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
-let g:syntastic_enable_highlighting = 0
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers = ['eslint']
-sign define SyntasticError text=▸ linehl=Red texthl=SyntasticErrorSign
+" sign define SyntasticError text=▸ linehl=Red texthl=SyntasticErrorSign
 
 " vim-json
 let g:vim_json_syntax_conceal = 0
@@ -291,43 +301,57 @@ let g:vim_json_syntax_conceal = 0
 " ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" vim-go
-let g:go_fmt_command = "goimports"
+let g:UltiSnipsJumpBackwardTrigger="<c-f>"
 
 " Turn off preview window
 set completeopt-=preview
 
+
+" autopair
+let g:AutoPairsMapCR = 0
+let g:AutoPairsShortcutFastWrap='<c-w>'
+
+
+" vim-go
+let g:go_fmt_command = "goimports"
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <Leader>t <Plug>(go-test)
 au FileType go nmap <Leader>e <Plug>(go-rename)
-au FileType go nmap <Leader>gd :GoDef<cr>
+au FileType go nmap gd <Plug>(go-def)
+au FileType go nmap <Leader>s <Plug>(go-def-split)
+au FileType go nmap <Leader>v <Plug>(go-def-vertical)
+au FileType go nmap <Leader>t <Plug>(go-def-tab)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
 " lightline
 let g:lightline = {
-  \ 'active': {
-  \   'left': [['mode', 'paste'], ['fugitive', 'filename', 'ctrlpmark', 'modified']],
-  \   'right': [['syntastic', 'lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
-  \ },
-  \ 'component': {
-  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-  \ },
-  \ 'separator': { 'left': '', 'right': '' },
-  \ 'subseparator': { 'left': '|', 'right': '|' }
-  \ }
+	\ 'active': {
+	\   'left': [['mode', 'paste'], ['fugitive', 'filename', 'ctrlpmark', 'modified']],
+	\   'right': [['syntastic', 'lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
+	\ },
+	\ 'component': {
+	\   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+	\ },
+	\ 'separator': { 'left': '', 'right': '' },
+	\ 'subseparator': { 'left': '|', 'right': '|' }
+	\ }
 
 " Custom colors """"""""""""""""""""""""""""""""""""""""
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax off
 
-hi Pmenu                    ctermbg=25  ctermfg=233
-hi PmenuSel                 ctermbg=148 ctermfg=233
-hi CursorLine               ctermbg=234 ctermfg=none cterm=none
-hi! SystasticErrorSign      ctermbg=1   ctermfg=255
-hi SpellCap                 ctermfg=1   ctermbg=37
-hi SignColumn               ctermbg=233
-hi Search                   ctermbg=198 ctermfg=255 cterm=none
+hi Pmenu										ctermbg=25  ctermfg=233
+hi PmenuSel									ctermbg=148 ctermfg=233
+hi CursorLine								ctermbg=234 ctermfg=none cterm=none
+hi! SystasticErrorSign			ctermbg=1		ctermfg=255
+hi SpellCap									ctermfg=1		ctermbg=37
+hi SignColumn								ctermbg=233
+hi Search										ctermbg=198 ctermfg=255 cterm=none
+
