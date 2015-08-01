@@ -108,6 +108,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'chriskempson/base16-vim'
 Plugin 'veegee/cql-vim'
 Plugin 'Raimondi/delimitMate'
+Plugin 'industry.vim'
 " Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
