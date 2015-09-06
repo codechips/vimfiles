@@ -107,7 +107,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'chriskempson/base16-vim'
 Plugin 'veegee/cql-vim'
 Plugin 'Raimondi/delimitMate'
-" Plugin 'jiangmiao/auto-pairs'
+Plugin 'nicklasos/vim-jsx-riot'
 
 call vundle#end()
 
@@ -305,6 +305,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-f>"
 " Turn off preview window
 set completeopt-=preview
 
+" riot.js
+au BufNewFile,BufRead *.tag setlocal ft=javascript
 
 " autopair
 let g:AutoPairsMapCR = 0
