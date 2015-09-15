@@ -52,9 +52,7 @@ endif
 " MacVim settings
 if has("gui_running")
   set guifont=MonospaceTypewriter\ for\ Powerline:h12
-	colorscheme ir_black
   hi clear CursorLine
-  hi CursorLineNr guibg=#333333 guifg=Yellow
   set cursorline
 
   if has("gui_macvim")
@@ -114,7 +112,7 @@ call vundle#end()
 filetype plugin indent on
 
 syntax on
-colors industry
+" colors industry
 
 " Mappings  """""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
